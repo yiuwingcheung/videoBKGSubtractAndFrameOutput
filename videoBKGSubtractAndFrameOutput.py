@@ -35,13 +35,10 @@ def run( videoIn, videoOut = '', frameOutDir = '', frameSamplingFreq = 0.):
 	##Define the intensity correction to tune the contrast
 	lookUpTable = np.empty((1,256),np.uint8)
 	for i in range(256):
-		#lookUpTable[0,i] = np.clip(0.2*i -3 + (207/(1+np.exp((25.5-i)/6))),0,255) #linear + sigmoid
-		#lookUpTable[0,i] = np.clip(-5 + (260/(1+np.exp((39-i)/10))),0,255) #sigmoid
-		#lookUpTable[0,i] = np.clip(0.1*i -4 + (233/(1+np.exp((39-i)/10))),0,255) #linear + sigmoid
 		#lookUpTable[0,i] = np.clip(pow(i/255.0,0.5)*255.0,0,255) #gamma correction
 		lookUpTable[0,i] = np.clip(0.4*i -4.8 + (158/(1+np.exp((19-i)/5.5))),0,255) #linear + sigmoid
-		#lookUpTable[0,i] = np.clip(0.2*i -1 + (205/(1+np.exp((26-i)/5))),0,255) #linear + sigmoid
-		print '%d -> %d' %(i,lookUpTable[0,i])  #Check if lookUpTable[0,0] = 0, lookUpTable[0,255] = 255
+		#print '%d -> %d' %(i,lookUpTable[0,i])  #Check if lookUpTable[0,0] = 0, lookUpTable[0,255] = 255
+		
 	##Skip some frames at the begining of the video which are taken when the camera was not stable
 	#ret, frame = src.read()
 	frameCnt = 0
@@ -76,7 +73,7 @@ def run( videoIn, videoOut = '', frameOutDir = '', frameSamplingFreq = 0.):
 				out.write(showDelta)
 			if frameSamplingFreq and frameCnt % int(fps / frameSamplingFreq) is 0:
 				frameCntStr = str(frameCnt)
-				frameCntStr = frameCntStr.zfill(6)
+				frameCntStr = frameCntStr.zfill(6)		#Fill zeros in filename
 				cv2.imwrite(os.path.join(frameOutDir, "%s_" %(framePrefix) + frameCntStr+".png" ), showDelta)
 			
 			if frameCnt > showLine * tot:
