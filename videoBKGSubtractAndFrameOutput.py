@@ -91,4 +91,4 @@ if __name__ == '__main__':
 				run( os.path.join(root, file), 
 					 videoOut = os.path.join(root, file + '_deBkg.avi'), #videoOut = ''
 					 frameOutDir = os.path.join(root, file + '_frames'), 
-					 frameSamplingFreq = 2)
+					 frameSamplingFreq = 4)
